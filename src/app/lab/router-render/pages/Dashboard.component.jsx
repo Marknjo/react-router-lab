@@ -32,13 +32,13 @@ const initState = {
 	loading: true,
 };
 
-const Dashboard = ({ fetchDashboard }) => {
+const Dashboard = ({ fetchInitialData }) => {
 	const [state, dispatch] = useReducer(dashboardReducer, initState);
 
 	const { name, message, error, loading } = state;
 
 	useEffect(() => {
-		const unSub = fetchDashboard()
+		const unSub = fetchInitialData()
 			.then(({ name, message }) => {
 				dispatch({
 					type: "SUCCESSFULLY_FETCHED_DASHBOARD",
@@ -57,7 +57,7 @@ const Dashboard = ({ fetchDashboard }) => {
 			});
 
 		return () => window.clearTimeout(unSub);
-	}, [fetchDashboard]);
+	}, [fetchInitialData]);
 
 	if (error) {
 		return <p>{error}</p>;

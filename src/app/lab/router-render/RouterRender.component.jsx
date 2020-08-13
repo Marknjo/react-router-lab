@@ -1,14 +1,25 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Dashboard from "./pages/Dashboard.component";
-import { fetchDashboard } from "../../store/apis/routerRenderApi";
+import {
+	fetchDashboard,
+	fetchSettings,
+} from "../../store/apis/routerRenderApi";
+import Settings from "./pages/Settings.component";
 
 const routes = [
 	{
 		path: "/dashboard",
 		component: Dashboard,
-		fetchDashboard,
-		to: "Dashboard",
+		fetchInitialData: fetchDashboard,
+		label: "Dashboard",
+	},
+
+	{
+		path: "/settings",
+		component: Settings,
+		fetchInitialData: fetchSettings,
+		label: "Settings",
 	},
 ];
 
@@ -17,19 +28,21 @@ const RouterRender = () => {
 		<Router>
 			<h1>React Render Method</h1>
 			<ul className="nav">
-				<li className="nav-items">
-					<Link to="/dashboard" className="nav-links">
-						Dashboard
-					</Link>
-				</li>
+				{routes.map(({ path: to, label }) => (
+					<li key={label} className="nav-items">
+						<Link to={to} className="nav-links">
+							{label}
+						</Link>
+					</li>
+				))}
 			</ul>
 
-			{routes.map(({ to, path, component: C, fetchDashboard }) => {
+			{routes.map(({ label, path, component: C, fetchInitialData }) => {
 				return (
 					<Route
-						key={to}
+						key={label}
 						path={path}
-						render={() => <C fetchDashboard={fetchDashboard} />}
+						render={() => <C fetchInitialData={fetchInitialData} />}
 					/>
 				);
 			})}

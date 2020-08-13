@@ -32,13 +32,13 @@ const initState = {
 	loading: true,
 };
 
-const Settings = ({ fetchSettings }) => {
+const Settings = ({ fetchInitialData }) => {
 	const [state, dispatch] = useReducer(settingsReducer, initState);
 
 	const { name, message, error, loading } = state;
 
 	useEffect(() => {
-		const unSub = fetchSettings()
+		const unSub = fetchInitialData()
 			.then(({ name, message }) => {
 				dispatch({
 					type: "SUCCESSFULLY_FETCHED_SETTINGS",
@@ -57,7 +57,7 @@ const Settings = ({ fetchSettings }) => {
 			});
 
 		return () => window.clearTimeout(unSub);
-	}, [fetchSettings]);
+	}, [fetchInitialData]);
 
 	if (error) {
 		return <p>{error}</p>;

@@ -1,4 +1,4 @@
-export const fetSettings = () => {
+export const fetchSettings = () => {
 	const data = {
 		name: "Settings",
 		message: "Successfully Fetched Settings Data",
