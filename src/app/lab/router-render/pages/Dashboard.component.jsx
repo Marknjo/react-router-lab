@@ -54,7 +54,7 @@ const Dashboard = ({ fetchDashboard }) => {
 	if (loading) {
 		return (
 			<div className="loading">
-				<p className="loading-header">{loadingText}</p>
+				<p className="loading-title">{loadingText}</p>
 			</div>
 		);
 	}
