@@ -1,25 +1,59 @@
-import React, { useState } from "react";
+import React, { useReducer } from "react";
 import { useEffect } from "react";
 import Loading from "../../../helpers/Loading.component";
 
+const dashboardReducer = (state, action) => {
+	switch (action.type) {
+		case "SUCCESSFULLY_FETCHED_DASHBOARD":
+			return {
+				...state,
+				loading: false,
+				error: null,
+				name: action.payload.name,
+				message: action.payload.message,
+			};
+
+		case "DASHBOARD_FETCH_ERROR":
+			return {
+				...state,
+				loading: false,
+				error: action.payload.error,
+			};
+
+		default:
+			throw new Error("Error: Supplied action type not known");
+	}
+};
+
+const initState = {
+	name: "",
+	message: "",
+	error: null,
+	loading: true,
+};
+
 const Dashboard = ({ fetchDashboard }) => {
-	const [name, setName] = useState("null");
-	const [message, setMessage] = useState("null");
-	const [error, setError] = useState(null);
-	const [loading, setLoading] = useState(true);
+	const [state, dispatch] = useReducer(dashboardReducer, initState);
+
+	const { name, message, error, loading } = state;
 
 	useEffect(() => {
 		const unSub = fetchDashboard()
 			.then(({ name, message }) => {
-				setName(name);
-				setMessage(message);
-				setError(null);
-				setLoading(false);
+				dispatch({
+					type: "SUCCESSFULLY_FETCHED_DASHBOARD",
+					payload: {
+						message,
+						name,
+					},
+				});
 			})
 			.catch((error) => {
 				console.warn(error);
-				setError(error.message);
-				setLoading(true);
+				dispatch({
+					type: "DASHBOARD_FETCH_ERROR",
+					error: error.message,
+				});
 			});
 
 		return () => window.clearTimeout(unSub);
@@ -30,7 +64,7 @@ const Dashboard = ({ fetchDashboard }) => {
 	}
 
 	if (loading) {
-		return <Loading content="Load Dashboard" />;
+		return <Loading content="Dashboard" />;
 	}
 
 	return (

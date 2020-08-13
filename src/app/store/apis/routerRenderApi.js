@@ -1,7 +1,7 @@
 export const fetSettings = () => {
 	const data = {
 		name: "Settings",
-		message: "SUccessfully Fetched Settings Data",
+		message: "Successfully Fetched Settings Data",
 	};
 
 	return new Promise((resolve, reject) => {
@@ -14,7 +14,7 @@ export const fetSettings = () => {
 export const fetchDashboard = () => {
 	const data = {
 		name: "Dashboard",
-		message: "SUccessfully Fetched Dashboard Data",
+		message: "Successfully Fetched Dashboard Data",
 	};
 
 	return new Promise((resolve, reject) => {
