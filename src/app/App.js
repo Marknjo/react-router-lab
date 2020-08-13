@@ -2,10 +2,11 @@ import React from "react";
 
 import "normalize.css";
 import "./styles/App.css";
+import Nesting from "./lab/nested/Nesting.component";
 
 const App = () => (
 	<div className="container">
-		<h1>React Hooks Lab</h1>
+		<Nesting />
 	</div>
 );
 
