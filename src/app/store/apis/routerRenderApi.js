@@ -13,13 +13,14 @@ export const fetSettings = () => {
 
 export const fetchDashboard = () => {
 	const data = {
-		name: "Settings",
-		message: "SUccessfully Fetched Settings Data",
+		name: "Dashboard",
+		message: "SUccessfully Fetched Dashboard Data",
 	};
 
 	return new Promise((resolve, reject) => {
 		setTimeout(() => {
 			resolve(data);
-		}, 2000);
+		}, 6000);
+		return;
 	});
 };
