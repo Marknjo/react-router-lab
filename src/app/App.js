@@ -2,11 +2,11 @@ import React from "react";
 
 import "normalize.css";
 import "./styles/App.css";
-import RouterHistory from "./store/lab/router-history/RouterHistory.component";
+import QueryStringRoute from "./store/lab/query-strings/QueryStrings.component";
 
 const App = () => (
 	<div className="container">
-		<RouterHistory />
+		<QueryStringRoute />
 	</div>
 );
 
