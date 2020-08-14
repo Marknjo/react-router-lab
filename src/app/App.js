@@ -2,11 +2,11 @@ import React from "react";
 
 import "normalize.css";
 import "./styles/App.css";
-import RouterRender from "./lab/router-render/RouterRender.component";
+import RouterHistory from "./store/lab/router-history/RouterHistory.component";
 
 const App = () => (
 	<div className="container">
-		<RouterRender />
+		<RouterHistory />
 	</div>
 );
 
