@@ -206,8 +206,8 @@ const BlogSearchFilter = () => {
 				>
 					<h2
 						style={{
-							borderBottom: "4px solid #285265",
 							paddingBottom: "0.83rem",
+							borderBottom: "4px solid #285265",
 							textShadow: "0 2px 1px rgba(0, 0, 0, 0.25)",
 						}}
 					>
@@ -325,7 +325,9 @@ const timerReducerIntialState = {
 	reset: false,
 };
 
-const Home = () => {
+const Timer = ({ display }) => {
+	const location = useLocation();
+
 	/**
 	 * Testing what happens to the id when we get it from
 	 * use refs
@@ -442,6 +444,82 @@ const Home = () => {
 		hours > 0 && sethours(0);
 	};
 
+	const setDisplay = display ? "block" : "none";
+	console.log("Location: " + location.state.timer);
+	console.log(location);
+	console.log("Props display: " + display);
+	return (
+		<div
+			style={{
+				display: setDisplay,
+			}}
+		>
+			<div
+				style={{
+					display: "flex",
+					justifyContent: "center",
+					alignItems: "center",
+					flexFlow: "nowrap column",
+					backgroundColor: "#01324c",
+					color: "#fff",
+					padding: "1rem 1.5rem",
+					minWidth: "10rem",
+					borderRadius: "2px",
+					boxShadow: "-1px 2px 6px 0px rgba(0, 0, 0, 0.5)",
+					position: "absolute",
+					top: "2.4rem",
+					right: 0,
+					zIndex: 1020,
+				}}
+			>
+				<p
+					style={{
+						margin: "0 -2rem 1rem",
+						padding: "0.4rem",
+						borderBottom: "1px solid #285265",
+						textShadow: "0 2px 1px rgba(0, 0, 0, 0.25)",
+						fontSize: "1.2rem",
+						fontWeight: 700,
+					}}
+				>
+					Time Lapse
+				</p>
+				<p>
+					{hours === 0 ? "00" : hours > 9 ? hours : `0${hours}`} :{" "}
+					{minutes === 0 ? "00" : minutes > 9 ? minutes : `0${minutes}`} : {""}
+					{seconds === 0 ? "00" : seconds > 9 ? seconds : `0${seconds}`}
+				</p>
+
+				<div
+					style={{
+						display: "flex",
+					}}
+				>
+					{reset && (
+						<button
+							style={{
+								margin: "0.5rem",
+							}}
+							onClick={handleReset}
+						>
+							Reset
+						</button>
+					)}
+					<button
+						style={{
+							margin: "0.5rem",
+						}}
+						onClick={handlePlayOrPause}
+					>
+						{play ? "Pause" : "Play"}{" "}
+					</button>
+				</div>
+			</div>
+		</div>
+	);
+};
+
+const Home = () => {
 	return (
 		<div
 			style={{
@@ -449,49 +527,31 @@ const Home = () => {
 				justifyContent: "center",
 				alignItems: "center",
 				flexFlow: "nowrap column",
+				position: "relative",
 			}}
 		>
 			<h1>Home Page</h1>
-			<p>Time Lapse</p>
-			<p>
-				{hours === 0 ? "00" : hours > 9 ? hours : `0${hours}`} :{" "}
-				{minutes === 0 ? "00" : minutes > 9 ? minutes : `0${minutes}`} : {""}
-				{seconds === 0 ? "00" : seconds > 9 ? seconds : `0${seconds}`}
-			</p>
-
-			<div
-				style={{
-					display: "flex",
-				}}
-			>
-				{reset && (
-					<button
-						style={{
-							margin: "0.5rem",
-						}}
-						onClick={handleReset}
-					>
-						Reset
-					</button>
-				)}
-				<button
-					style={{
-						margin: "0.5rem",
-					}}
-					onClick={handlePlayOrPause}
-				>
-					{play ? "Pause" : "Play"}{" "}
-				</button>
-			</div>
 		</div>
 	);
 };
 
 const LinkTo = () => {
+	const [timer, setTimer] = useState(false);
+	//const setDisplay = timer ? "block" : "none";
+
+	const toggleTimer = () => setTimer(!timer);
+
 	return (
 		<Router>
-			<div>
-				<ul className="nav">
+			<div style={{ position: "relative" }}>
+				<ul
+					className="nav"
+					style={{
+						paddingBottom: "0.3rem",
+						paddingTop: "0.3rem",
+						display: "flex",
+					}}
+				>
 					<li className="nav-items">
 						<Link className="nav-links" to="/">
 							Home
@@ -502,12 +562,41 @@ const LinkTo = () => {
 							Search
 						</Link>
 					</li>
+
+					<li
+						className="nav-items"
+						style={{
+							marginLeft: "auto",
+						}}
+					>
+						<Link
+							to={{
+								pathname: "",
+								state: {
+									timer,
+								},
+							}}
+							className="nav-links"
+							onClick={toggleTimer}
+							style={{
+								fontSize: "0.9rem",
+								border: "1px solid #01574b",
+								marginTop: "0.2rem",
+								paddingTop: "2px",
+								paddingBottom: "2px",
+							}}
+						>
+							{timer ? "Hide Timer" : "Show Timer"}
+						</Link>
+					</li>
 				</ul>
 				<Switch>
 					<Route exact path="/" component={Home} />
 					<Route path="/search" component={BlogSearchFilter} />
 					<Route path="*" component={Page404} />
 				</Switch>
+
+				<Timer display={timer} />
 			</div>
 		</Router>
 	);
