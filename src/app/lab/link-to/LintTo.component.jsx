@@ -445,9 +445,6 @@ const Timer = ({ display }) => {
 	};
 
 	const setDisplay = display ? "block" : "none";
-	console.log("Location: " + location.state.timer);
-	console.log(location);
-	console.log("Props display: " + display);
 	return (
 		<div
 			style={{
