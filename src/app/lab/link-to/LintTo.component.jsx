@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useReducer } from "react";
+import React, { useRef, useState, useEffect, useReducer, useMemo } from "react";
 import {
 	BrowserRouter as Router,
 	Switch,
@@ -254,43 +254,98 @@ const Page404 = () => (
 	</div>
 );
 
-const useTimer = ({
-	type = "hours",
-	dependancy = null,
-	speed = 1000,
-	name = "clearSeconds",
-}) => {
-	const [timer, setTimer] = useState(0);
-	const id = useRef();
-	const clearTimer = () => clearInterval(id.current);
+
+
+const useTimer = (play) => {
+
+	const lapseId = useRef(null);
+	const secsId = useRef(null);
+	const minsId = useRef(null);
+	const hrsId = useRef(null);
+
+	const [lapse, setLapse] = useState(0);
+	const [seconds, setSeconds] = useState(0);
+	const [minutes, setMinutes] = useState(0);
+	const [hours, setHours] = useState(0);
+
+	const clearLapse = () => clearInterval(lapseId.current);
+	const clearSeconds = () => clearInterval(secsId.current);
+	const clearMinutes = () => clearInterval(minsId.current);
+	const clearHours = () => clearInterval(hrsId.current);
 
 	useEffect(() => {
-		if (dependancy) {
-			id.current = setInterval(() => {
-				if (type === "hours") {
-					return setTimer((t) => (t = t + 1));
-				} else if (type === "minutes" || type === "seconds") {
-					return setTimer((t) => {
-						if (t === 59) {
-							setTimer(0);
-						}
-						return (t = t + 1);
-					});
-				} else {
-					throw new Error("Timer cannot be recognized");
-				}
-			}, speed);
-			return clearTimer;
-		}
-	}, [dependancy, speed, type]);
+		if(play) {
+			lapseId.current = setInterval(() => {
+				setLapse((l) => {
+				if (l === 29) {
+					setLapse(0);
 
-	const setName = `set${type}`;
+				}
+				return l + 1;
+			});
+		}, 10);
+
+		return clearLapse;
+		}
+	}, [play]);
+	
+	useEffect(() => {
+		if(play) {
+			secsId.current = setInterval(() => {
+			setSeconds((s) => {
+				if (s === 59) {
+					setSeconds(0);
+				}
+				return s + 1;
+			});
+		}, 1000);
+
+		return clearSeconds;
+		}
+	}, [play]);
+
+	useEffect(() => {
+		if(play) {
+			minsId.current = setInterval(() => {
+			setMinutes((m) => {
+				if (m === 59) {
+					setMinutes(0);
+				}
+				return m + 1;
+			});
+		}, 60000);
+
+		return clearMinutes;
+		}
+	}, [play]);
+
+	useEffect(() => {
+		if(play) {
+			hrsId.current = setInterval(() => {
+			setHours((h) => {
+				return h + 1;
+			});
+		}, 3600000);
+
+		return clearMinutes;
+		}
+	}, [play]);
+
 	return {
-		[name]: clearTimer,
-		[type]: timer,
-		[setName]: setTimer,
-	};
-};
+		lapse: useMemo(() => lapse, [lapse]),
+		seconds: useMemo(() => seconds, [seconds]),
+		minutes,
+		hours,
+		clearLapse,
+		clearSeconds,
+		clearMinutes,
+		clearHours,
+		setLapse,
+		setSeconds,
+		setMinutes,
+		setHours
+	}
+}
 
 const timerReducer = (state, action) => {
 	switch (action.type) {
@@ -326,8 +381,6 @@ const timerReducerIntialState = {
 };
 
 const Timer = ({ display }) => {
-	const location = useLocation();
-
 	/**
 	 * Testing what happens to the id when we get it from
 	 * use refs
@@ -402,30 +455,28 @@ const Timer = ({ display }) => {
 	//handle play && reset
 	const [state, dispatch] = useReducer(timerReducer, timerReducerIntialState);
 	const { play, reset } = state;
+	const {
+		lapse,
+		seconds,
+		minutes,
+		hours,
+		clearLapse,
+		clearSeconds,
+		clearMinutes,
+		clearHours,
+		setLapse,
+		setSeconds,
+		setMinutes,
+		setHours
+	} = useTimer(play);
 
-	//handle timers
-	const { minutes, clearMinutes, setminutes } = useTimer({
-		dependancy: play,
-		type: "minutes",
-		name: "clearMinutes",
-		speed: 60000,
-	});
-
-	const { hours, clearHours, sethours } = useTimer({
-		type: "hours",
-		dependancy: play,
-		name: "clearHours",
-		speed: 3600000,
-	});
-
-	const { seconds, clearSeconds, setseconds } = useTimer({
-		type: "seconds",
-		dependancy: play,
-	});
+	
 
 	const handlePlayOrPause = () => {
 		if (play) {
 			dispatch({ type: "PAUSE_TIMER" });
+
+			clearLapse()
 			clearSeconds();
 			clearMinutes();
 			clearHours();
@@ -436,18 +487,22 @@ const Timer = ({ display }) => {
 
 	const handleReset = () => {
 		dispatch({ type: "RESET_TIMER" });
+
+		setLapse(0)
+		setSeconds(0);
+		minutes > 0 && setMinutes(0);
+		hours > 0 && setHours(0);
+
 		clearSeconds();
-		setseconds(0);
 		clearMinutes();
-		minutes > 0 && setminutes(0);
 		clearHours();
-		hours > 0 && sethours(0);
+		clearLapse()
 	};
 
+	
+
 	const setDisplay = display ? "block" : "none";
-	console.log("Location: " + location.state.timer);
-	console.log(location);
-	console.log("Props display: " + display);
+
 	return (
 		<div
 			style={{
@@ -488,6 +543,8 @@ const Timer = ({ display }) => {
 					{hours === 0 ? "00" : hours > 9 ? hours : `0${hours}`} :{" "}
 					{minutes === 0 ? "00" : minutes > 9 ? minutes : `0${minutes}`} : {""}
 					{seconds === 0 ? "00" : seconds > 9 ? seconds : `0${seconds}`}
+
+					<small>{lapse === 0 ? "00" : lapse > 9 ? lapse : `0${lapse}`}</small>
 				</p>
 
 				<div
