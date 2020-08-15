@@ -123,9 +123,6 @@ const BlogSearchFilter = () => {
 						>
 							Go back to search
 						</button>
-						<br />
-						or
-						<Link to="/">Go to Home Page</Link>
 					</>
 				) : (
 					<>
@@ -238,8 +235,6 @@ const BlogSearchFilter = () => {
 							{queryCategory}
 						</p>
 					)}
-
-					<Link to="/">Go to Home Page</Link>
 				</div>
 			)}
 		</div>
@@ -256,7 +251,6 @@ const Page404 = () => (
 		}}
 	>
 		<h1>404 Page Not Found</h1>
-		<Link to="/">Go to Home Page</Link>
 	</div>
 );
 
@@ -270,20 +264,33 @@ const Home = () => (
 		}}
 	>
 		<h1>Home Page</h1>
-		<Link to="/search">Visit Blog</Link>
 	</div>
 );
 
-const QueryStringRoute = () => {
+const LinkTo = () => {
 	return (
 		<Router>
-			<Switch>
-				<Route exact path="/" component={Home} />
-				<Route path="/search" component={BlogSearchFilter} />
-				<Route path="*" component={Page404} />
-			</Switch>
+			<div>
+				<ul className="nav">
+					<li className="nav-items">
+						<Link className="nav-links" to="/">
+							Home
+						</Link>
+					</li>
+					<li className="nav-items">
+						<Link className="nav-links" to="/search">
+							Search
+						</Link>
+					</li>
+				</ul>
+				<Switch>
+					<Route exact path="/" component={Home} />
+					<Route path="/search" component={BlogSearchFilter} />
+					<Route path="*" component={Page404} />
+				</Switch>
+			</div>
 		</Router>
 	);
 };
 
-export default QueryStringRoute;
+export default LinkTo;
