@@ -2,11 +2,11 @@ import React from "react";
 
 import "normalize.css";
 import "./styles/App.css";
-import QueryStringRoute from "./store/lab/query-strings/QueryStrings.component";
+import LinkTo from "./lab/link-to/LintTo.component";
 
 const App = () => (
 	<div className="container">
-		<QueryStringRoute />
+		<LinkTo />
 	</div>
 );
 
