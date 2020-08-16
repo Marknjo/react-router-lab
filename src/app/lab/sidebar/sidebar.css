@@ -135,17 +135,18 @@
   width: 100%;
   background-color: var(--teal-600);
   border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
+  border-right: 1px solid transparent;
   min-height: var(--grid-nav-size);
   transition: all 0.3s ease-in-out;
   color:var(--teal-100);
 }
 
-.s-nav--link:focus, 
+ 
 .s-nav--link:hover {
-  color:var(--blue-grey-50);
-  border-left-color: var(--teal-100);
-  background-color: var(--teal-800);
+  color:var(--blue-grey-900);
+  border-left-color: var(--teal-800);
+  border-right-color: var(--teal-800);
+  background-color: var(--teal-100);
 }
 
 .s-nav--active {
