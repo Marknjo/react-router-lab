@@ -8,6 +8,7 @@ import {
 	useLocation,
 } from "react-router-dom";
 import queryString from "query-string";
+import { Home, About, Contact, Page404 } from "./components/Pages.components";
 
 /**
  * Query String Route - handles the routing
@@ -241,18 +242,6 @@ const BlogSearchFilter = () => {
 	);
 };
 
-const Page404 = () => (
-	<div
-		style={{
-			display: "flex",
-			justifyContent: "center",
-			alignItems: "center",
-			flexFlow: "nowrap column",
-		}}
-	>
-		<h1>404 Page Not Found</h1>
-	</div>
-);
 
 const useTimer = ({
 	type = "hours",
@@ -516,53 +505,7 @@ const Timer = ({ display }) => {
 	);
 };
 
-const Home = () => {
-	return (
-		<div
-			style={{
-				display: "flex",
-				justifyContent: "center",
-				alignItems: "center",
-				flexFlow: "nowrap column",
-				position: "relative",
-			}}
-		>
-			<h1>Home Page</h1>
-		</div>
-	);
-};
 
-const About = () => {
-	return (
-		<div
-			style={{
-				display: "flex",
-				justifyContent: "center",
-				alignItems: "center",
-				flexFlow: "nowrap column",
-				position: "relative",
-			}}
-		>
-			<h1>About Page</h1>
-		</div>
-	);
-};
-
-const Contact = () => {
-	return (
-		<div
-			style={{
-				display: "flex",
-				justifyContent: "center",
-				alignItems: "center",
-				flexFlow: "nowrap column",
-				position: "relative",
-			}}
-		>
-			<h1>Get in Touch With Our Team</h1>
-		</div>
-	);
-};
 
 const BaseRouter = () => {
 	const [timer, setTimer] = useState(false);
@@ -595,11 +538,6 @@ const BaseRouter = () => {
 					<li className="nav-items">
 						<Link className="nav-links" to="/contact">
 							Contact
-						</Link>
-					</li>
-					<li className="nav-items">
-						<Link className="nav-links" to="/search">
-							Search
 						</Link>
 					</li>
 
