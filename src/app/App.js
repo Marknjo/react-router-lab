@@ -2,11 +2,11 @@ import React from "react";
 
 import "normalize.css";
 import "./styles/App.css";
-import LinkTo from "./lab/link-to/LintTo.component";
+import BaseRouter from "./lab/timer-app/BaseRouter.component";
 
 const App = () => (
 	<div className="container">
-		<LinkTo />
+		<BaseRouter />
 	</div>
 );
 
