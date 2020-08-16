@@ -70,7 +70,7 @@ const Page404 = () => {
 				</span>
 			</h1>
 			<p>
-				Oops, it seems like we cannot this path <code>{pathname}</code> in our
+				Oops, it seems like we cannot find this path <code>{pathname}</code> in our
 				resources.
 			</p>
 			<p>Do you want us to take you to our home Page?</p>
