@@ -53,3 +53,25 @@ body {
 	text-decoration: none;
 	color: #01574b;
 }
+
+code {
+	background-color: rgb(75, 75, 75);
+	color: #f3f3f3;
+	display: inline-block;
+	padding: 0 0.3rem;
+	border-radius: 2px;
+	
+	
+}
+
+.content {
+	padding-top: 1px;
+}
+
+
+.verticle-center-content {
+	display: flex;
+	flex-flow: nowrap column;
+	align-items: center;
+	justify-content: center;
+}

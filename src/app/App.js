@@ -5,7 +5,9 @@ import "./styles/App.css";
 
 const App = () => (
 	<div className="container">
-		<h1>React Hooks Lab</h1>
+		<div className="content verticle-center-content">
+			<h1>React Hooks Lab</h1>
+		</div>
 	</div>
 );
 
