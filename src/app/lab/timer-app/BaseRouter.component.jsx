@@ -6,11 +6,7 @@ import {
 	Link,
 } from "react-router-dom";
 import { Home, About, Contact, Page404 } from "./components/Pages.components";
-import Timer from "./components/Timer.compoent";
-
-
-
-
+import Timer from "./components/Timer.componet";
 
 
 

@@ -1,42 +1,6 @@
-import React, { useState, useRef, useEffect, useReducer } from 'react'
+import React, { useReducer } from 'react'
+import useTimer from '../hooks/useTimer';
 
-const useTimer = ({
-	type = "hours",
-	dependancy = null,
-	speed = 1000,
-	name = "clearSeconds",
-}) => {
-	const [timer, setTimer] = useState(0);
-	const id = useRef();
-	const clearTimer = () => clearInterval(id.current);
-
-	useEffect(() => {
-		if (dependancy) {
-			id.current = setInterval(() => {
-				if (type === "hours") {
-					return setTimer((t) => (t = t + 1));
-				} else if (type === "minutes" || type === "seconds") {
-					return setTimer((t) => {
-						if (t === 59) {
-							setTimer(0);
-						}
-						return (t = t + 1);
-					});
-				} else {
-					throw new Error("Timer cannot be recognized");
-				}
-			}, speed);
-			return clearTimer;
-		}
-	}, [dependancy, speed, type]);
-
-	const setName = `set${type}`;
-	return {
-		[name]: clearTimer,
-		[type]: timer,
-		[setName]: setTimer,
-	};
-};
 
 const timerReducer = (state, action) => {
 	switch (action.type) {
