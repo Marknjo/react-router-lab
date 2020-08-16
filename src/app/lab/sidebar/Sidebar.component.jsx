@@ -1,7 +1,6 @@
 import React from 'react'
 import { 
   BrowserRouter as Router, 
-  Link, 
   Switch, 
   Route, 
   NavLink
@@ -16,28 +15,28 @@ const routes = [
 		exact: true,
 		sidebar: () => (
 			<>
-				<h1>Home Page </h1>
+				<p>Home Page </p>
 			</>
 		),
-		main: () => <h2>Home</h2>,
+		main: () => <h1>Home</h1>,
 	},
 	{
 		path: "/bubblegum",
 		sidebar: () => (
 			<>
-				<h1>Bubblegum Page </h1>
+				<p>Bubblegum Page </p>
 			</>
 		),
-		main: () => <h2>Bubblegum</h2>,
+		main: () => <h1>Bubblegum</h1>,
 	},
 	{
 		path: "/shoelaces",
 		sidebar: () => (
 			<>
-				<h1>Shoelaces Page </h1>
+				<p>Shoelaces Page </p>
 			</>
 		),
-		main: () => <h2>Shoelaces</h2>,
+		main: () => <h1>Shoelaces</h1>,
 	},
 ];
 
@@ -74,6 +73,9 @@ const Navs = () => {
 					</NavLink>
 				</li>
 			</ul>
+
+      
+
 		</nav>
 	);
 }
@@ -88,7 +90,18 @@ export const Sidebar = () => {
 							<p>Sidebar</p>
 						</div>
 						<div className="sidebar-header__content">
-							<p>Content</p>
+							<Switch>
+								{routes.map((route) => {
+									return (
+										<Route
+											key={route.path}
+											path={route.path}
+											exact={route.exact}
+											component={route.sidebar}
+										/>
+									);
+								})}
+							</Switch>
 						</div>
 					</div>
 					<div className="sidebar-content">
@@ -96,11 +109,20 @@ export const Sidebar = () => {
 					</div>
 				</aside>
 				<div className="content-container">
-					<header className="content-container__header">
-						<p>Sidebar Header</p>
-					</header>
+					<header className="content-container__header"></header>
 					<section className="content-container__main">
-						<p>Content</p>
+						<Switch>
+							{routes.map((route) => {
+								return (
+									<Route
+										key={route.path}
+										path={route.path}
+										exact={route.exact}
+										component={route.main}
+									/>
+								);
+							})}
+						</Switch>
 					</section>
 				</div>
 				<footer className="footer">
