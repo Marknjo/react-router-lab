@@ -43,14 +43,39 @@ const routes = [
 
 const Navs = () => {
   return (
-    <nav className="s-nav-main">
-      <ul className="s-nav">
-        <li className="s-nav__item"><NavLink className="s-nav--link" to="/">Home</NavLink></li>
-        <li className="s-nav__item"><NavLink className="s-nav--link" to="/bubblegum">Bubblegum</NavLink></li>
-        <li className="s-nav__item"><NavLink className="s-nav--link" to="/shoelaces"></NavLink>Shoelaces</li>
-      </ul>
-    </nav>
-  )
+		<nav className="s-nav-main">
+			<ul className="s-nav">
+				<li className="s-nav__item">
+					<NavLink
+						className="s-nav--link"
+						to="/"
+						activeClassName="s-nav--active"
+						exact
+					>
+						Home
+					</NavLink>
+				</li>
+				<li className="s-nav__item">
+					<NavLink
+						className="s-nav--link"
+						to="/bubblegum"
+						activeClassName="s-nav--active"
+					>
+						Bubblegum
+					</NavLink>
+				</li>
+				<li className="s-nav__item">
+					<NavLink
+						className="s-nav--link"
+						to="/shoelaces"
+						activeClassName="s-nav--active"
+					>
+						Shoelaces
+					</NavLink>
+				</li>
+			</ul>
+		</nav>
+	);
 }
 
 export const Sidebar = () => {
