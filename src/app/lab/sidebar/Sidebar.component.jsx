@@ -4,7 +4,9 @@ import {
   Link, 
   Switch, 
   Route 
-} from 'react-router-dom'
+} from 'react-router-dom';
+
+
 
 
 const routes = [
@@ -40,21 +42,41 @@ const routes = [
 
 export const Sidebar = () => {
   return (
-    <div className="content">
-      <div className="nav-top">
-          <p>Sidebar Header</p>
-      </div>
-      <div className="nav-bar">
-        <p>Sidebar</p>
-      </div>
-      <div className="content">
-        <p>Content</p>
-      </div>
-      <div className="footer">
-        <p>Footer Area</p>
-      </div>
-    </div>
-  )
+		<div className="main-content">
+			<aside className="sidebar">
+				<div className="sidebar-header">
+					<div className="sidebar-header__title">
+						<p>Sidebar</p>
+					</div>
+					<div className="sidebar-header__content">
+						<p>Content</p>
+					</div>
+				</div>
+				<div className="sidebar-content">
+					<p>Sidebar Links</p>
+				</div>
+			</aside>
+			<div className="content-container">
+				<header className="content-container__header">
+					<p>Sidebar Header</p>
+				</header>
+				<section className="content-container__main">
+					<p>Content</p>
+				</section>
+			</div>
+			<footer className="footer">
+				<div className="footer-content">
+					<p>Content</p>
+				</div>
+				<div className="footer-copyright-info">
+					<p>
+						<span>Footer Area</span> {" "}
+						<small>Copyright</small>
+					</p>
+				</div>
+			</footer>
+		</div>
+	);
 }
 
 export default Sidebar;
