@@ -60,4 +60,18 @@ code {
 	display: inline-block;
 	padding: 0 0.3rem;
 	border-radius: 2px;
+	
+	
+}
+
+.content {
+	padding-top: 1px;
+}
+
+
+.verticle-center-content {
+	display: flex;
+	flex-flow: nowrap column;
+	align-items: center;
+	justify-content: center;
 }

@@ -2,11 +2,12 @@ import React from "react";
 
 import "normalize.css";
 import "./styles/App.css";
-import BaseRouter from "./lab/timer-app/BaseRouter.component";
+import "./lab/sidebar/sidebar.css"
+import Sidebar from "./lab/sidebar/Sidebar.component";
 
 const App = () => (
 	<div className="container">
-		<BaseRouter />
+		<Sidebar />
 	</div>
 );
 
