@@ -2,12 +2,11 @@ import React from "react";
 
 import "normalize.css";
 import "./styles/App.css";
+import Sidebar from "./lab/sidebar/Sidebar.component";
 
 const App = () => (
 	<div className="container">
-		<div className="content verticle-center-content">
-			<h1>React Hooks Lab</h1>
-		</div>
+		<Sidebar />
 	</div>
 );
 
