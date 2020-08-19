@@ -1,5 +1,29 @@
 import React from 'react'
-import {BrowserRouter as Router, Link, Switch, Route} from "react-router-dom"
+import {BrowserRouter as Router, Link, Switch, Route, useLocation} from "react-router-dom";
+
+const CustomLink = ({to, activeClassName, className, children}) => {
+  const { pathname } = useLocation();
+  
+  return (
+		<>
+      <Route path={to} children={() => {
+        return (
+          <>
+          {pathname === to ? ">" : ""}
+						<Link
+							to={to}
+							className={`${
+								activeClassName ? activeClassName : "is-active"
+							} ${className}`}
+						>
+							{children}
+						</Link>
+					</>
+				);
+      }} />
+		</>
+	);
+}
 
 const About = () => (
 	<div className="verticle-center-content">
@@ -29,10 +53,10 @@ const RouterChildren = () => {
     <Router>
       <ul className="nav">
         <li className="nav-items">
-          <Link to="/" className="nav-links">Home</Link>
+          <CustomLink to="/" className="nav-links">Home</CustomLink>
         </li>
         <li className="nav-items">
-          <Link to="/about" className="nav-links">About</Link>
+          <CustomLink to="/about" className="nav-links">About</CustomLink>
         </li>
       </ul>
 
@@ -40,7 +64,6 @@ const RouterChildren = () => {
         <Route exact path="/" component={Home} />
         <Route path="/about" component={About} />
         <Route path="*" component={Page404} />
-
       </Switch>
     </Router>
   )
