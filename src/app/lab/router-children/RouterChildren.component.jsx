@@ -1,21 +1,21 @@
 import React from 'react'
 import {BrowserRouter as Router, Link, Switch, Route, useLocation} from "react-router-dom";
 
-const CustomLink = ({to, activeClassName, className, children}) => {
+const CustomLink = ({to, exact = false, activeClassName, className, children}) => {
   const { pathname } = useLocation();
-  
   return (
 		<>
       <Route path={to} children={() => {
         return (
           <>
-          {pathname === to ? ">" : ""}
 						<Link
+              exact={exact ? true : false}
 							to={to}
 							className={`${
-								activeClassName ? activeClassName : "is-active"
+                activeClassName ? activeClassName : "is-active"
 							} ${className}`}
-						>
+              >
+              {pathname === to ? ">" : ""}
 							{children}
 						</Link>
 					</>
@@ -53,10 +53,10 @@ const RouterChildren = () => {
     <Router>
       <ul className="nav">
         <li className="nav-items">
-          <CustomLink to="/" className="nav-links">Home</CustomLink>
+          <CustomLink to="/" className="nav-links" exact={true}>Home</CustomLink>
         </li>
         <li className="nav-items">
-          <CustomLink to="/about" className="nav-links">About</CustomLink>
+          <CustomLink to="/about" className="nav-links link">About</CustomLink>
         </li>
       </ul>
 
